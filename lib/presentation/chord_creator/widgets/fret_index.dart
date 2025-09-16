@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:string_stack/domain/models/fret_position.dart';
 
 class FretIndex extends StatefulWidget {
@@ -30,6 +31,7 @@ class _FretIndexState extends State<FretIndex> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Draggable<FretPosition>(
+        onDragStarted: () => HapticFeedback.lightImpact(),
         childWhenDragging: widget.removeWhenDragging
             ? const SizedBox.shrink()
             : null,

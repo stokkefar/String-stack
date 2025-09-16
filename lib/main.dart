@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:string_stack/di/di_setup.dart';
-import 'package:string_stack/presentation/tab_screen.dart';
+import 'package:string_stack/presentation/start/start_screen.dart';
 
 void main() {
   configureDependencies();
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF0d1b2a)),
       ),
-      home: TabScreen(),
+      home: StartScreen(),
     );
   }
 }

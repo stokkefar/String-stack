@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:string_stack/domain/models/fret_position.dart';
 import 'package:string_stack/domain/models/guitar_string.dart';
-import 'package:string_stack/presentation/fret_index.dart';
+import 'package:string_stack/presentation/chord_creator/widgets/fret_index.dart';
 
 class String extends StatelessWidget {
   const String({
@@ -27,7 +26,6 @@ class String extends StatelessWidget {
           SizedBox.expand(
             child: DragTarget<FretPosition>(
               onAcceptWithDetails: (details) {
-                HapticFeedback.mediumImpact();
                 final fret = details.data;
 
                 final stringTab = GuitarString(

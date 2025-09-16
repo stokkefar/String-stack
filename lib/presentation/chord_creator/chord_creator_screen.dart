@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:string_stack/di/di_setup.dart';
 import 'package:string_stack/domain/models/fret_position.dart';
+import 'package:string_stack/domain/models/tuning.dart';
 import 'package:string_stack/modifiers/padding.dart';
-import 'package:string_stack/presentation/fret_index.dart';
-import 'package:string_stack/presentation/tab_grid.dart';
-import 'package:string_stack/presentation/tab_view_model.dart';
+import 'package:string_stack/presentation/chord_creator/widgets/fret_index.dart';
+import 'package:string_stack/presentation/chord_creator/widgets/tab_grid.dart';
+import 'package:string_stack/presentation/chord_creator/chord_creator_view_model.dart';
 
-class TabScreen extends StatelessWidget {
-  TabScreen({super.key});
-  late final TabViewModel vm = getIt.get();
+class ChordCreatorScreen extends StatelessWidget {
+  ChordCreatorScreen({super.key, required this.tuning});
+  final Tuning tuning;
+  late final ChordCreatorViewModel vm = getIt.get(param1: tuning);
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +37,20 @@ class TabScreen extends StatelessWidget {
               children: [
                 FretIndex(
                   fret: FretPosition(position: -1),
-                  onTap: () =>
-                      vm.handlePlaceTabOnTap(FretPosition(position: -1)),
+                  onTap: () {
+                    vm.handlePlaceTabOnTap(FretPosition(position: -1));
+                    HapticFeedback.lightImpact();
+                  },
                 ),
                 ...List.generate(22, (index) {
                   final fret = FretPosition(position: index);
 
                   return FretIndex(
                     fret: fret,
-                    onTap: () => vm.handlePlaceTabOnTap(fret),
+                    onTap: () {
+                      vm.handlePlaceTabOnTap(fret);
+                      HapticFeedback.lightImpact();
+                    },
                   );
                 }),
               ],
@@ -50,8 +58,14 @@ class TabScreen extends StatelessWidget {
             Spacer(),
             TabGrid(
               tuning: tuning,
-              onMoveToFret: (stringTab) => vm.onPlaceTab(stringTab),
-              onOccupiedTabTapped: (stringTab) => vm.removeStringTab(stringTab),
+              onMoveToFret: (stringTab) {
+                vm.onPlaceTab(stringTab);
+                HapticFeedback.lightImpact();
+              },
+              onOccupiedTabTapped: (stringTab) {
+                vm.removeStringTab(stringTab);
+                HapticFeedback.mediumImpact();
+              },
               tabs: vm.tabs.watch(context),
               onClear: () => vm.clearTabs(),
               onSave: () {},

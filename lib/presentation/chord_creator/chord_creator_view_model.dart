@@ -5,12 +5,16 @@ import 'package:string_stack/domain/models/guitar_string.dart';
 import 'package:string_stack/domain/models/tuning.dart';
 
 @injectable
-class TabViewModel {
+class ChordCreatorViewModel {
   final Signal<Tuning> tuning = signal(StandardTuning());
   final Signal<List<GuitarString>> tabs = signal([]);
 
+  ChordCreatorViewModel(@factoryParam this._tuning);
+  final Tuning _tuning;
+
   @postConstruct
   void init() {
+    tuning.set(_tuning);
     tabs.set(tuning.value.strings.reversed.toList());
   }
 
@@ -61,7 +65,6 @@ class TabViewModel {
         currentTabs[indexIncoming] = updatedString;
       }
     }
-
     tabs.set(currentTabs);
   }
 

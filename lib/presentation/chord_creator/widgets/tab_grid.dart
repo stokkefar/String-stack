@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:string_stack/domain/models/guitar_string.dart';
 import 'package:string_stack/domain/models/tuning.dart';
-import 'package:string_stack/presentation/string_item.dart';
+import 'package:string_stack/presentation/chord_creator/widgets/string_item.dart';
 import 'package:collection/collection.dart';
 
 class TabGrid extends StatelessWidget {

@@ -15,10 +15,9 @@ abstract class Tuning {
   }
 }
 
-// Standard tuning implementation
 class StandardTuning extends Tuning {
   @override
-  String get name => 'Standard';
+  String get name => 'Standard (EADGBE)';
 
   @override
   List<GuitarString> get strings => const [
@@ -31,10 +30,9 @@ class StandardTuning extends Tuning {
   ];
 }
 
-// Drop D tuning implementation
 class DropDTuning extends Tuning {
   @override
-  String get name => 'Drop D';
+  String get name => 'Drop D (DADGBE)';
 
   @override
   List<GuitarString> get strings => const [
@@ -44,5 +42,50 @@ class DropDTuning extends Tuning {
     GuitarString(note: Note.d, stringNumber: 4), // D
     GuitarString(note: Note.a, stringNumber: 5), // A
     GuitarString(note: Note.d, stringNumber: 6), // Dropped D
+  ];
+}
+
+class OpenDTuning extends Tuning {
+  @override
+  String get name => 'Open D (DADF#AD)';
+
+  @override
+  List<GuitarString> get strings => const [
+    GuitarString(note: Note.d, stringNumber: 1), // High E
+    GuitarString(note: Note.a, stringNumber: 2), // B
+    GuitarString(note: Note.fs, stringNumber: 3), // G
+    GuitarString(note: Note.d, stringNumber: 4), // D
+    GuitarString(note: Note.a, stringNumber: 5), // A
+    GuitarString(note: Note.d, stringNumber: 6), // Dropped D
+  ];
+}
+
+class OpenGTuning extends Tuning {
+  @override
+  String get name => 'Open G (DGDGBD)';
+
+  @override
+  List<GuitarString> get strings => const [
+    GuitarString(note: Note.d, stringNumber: 1), // High E
+    GuitarString(note: Note.b, stringNumber: 2), // B
+    GuitarString(note: Note.g, stringNumber: 3), // G
+    GuitarString(note: Note.d, stringNumber: 4), // D
+    GuitarString(note: Note.g, stringNumber: 5), // A
+    GuitarString(note: Note.d, stringNumber: 6), // Dropped D
+  ];
+}
+
+class DropCTuning extends Tuning {
+  @override
+  String get name => 'Drop C (CGCFAD)';
+
+  @override
+  List<GuitarString> get strings => const [
+    GuitarString(note: Note.d, stringNumber: 1), // High E
+    GuitarString(note: Note.a, stringNumber: 2), // B
+    GuitarString(note: Note.f, stringNumber: 3), // G
+    GuitarString(note: Note.c, stringNumber: 4), // D
+    GuitarString(note: Note.g, stringNumber: 5), // A
+    GuitarString(note: Note.c, stringNumber: 6), // Dropped D
   ];
 }
