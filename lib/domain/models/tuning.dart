@@ -21,12 +21,12 @@ class StandardTuning extends Tuning {
 
   @override
   List<GuitarString> get strings => const [
-    GuitarString(note: Note.e, stringNumber: 1), // High E
-    GuitarString(note: Note.b, stringNumber: 2), // B
-    GuitarString(note: Note.g, stringNumber: 3), // G
-    GuitarString(note: Note.d, stringNumber: 4), // D
-    GuitarString(note: Note.a, stringNumber: 5), // A
-    GuitarString(note: Note.e, stringNumber: 6), // Low E
+    GuitarString(note: Note.e, stringNumber: 1),
+    GuitarString(note: Note.b, stringNumber: 2),
+    GuitarString(note: Note.g, stringNumber: 3),
+    GuitarString(note: Note.d, stringNumber: 4),
+    GuitarString(note: Note.a, stringNumber: 5),
+    GuitarString(note: Note.e, stringNumber: 6),
   ];
 }
 
@@ -36,12 +36,12 @@ class DropDTuning extends Tuning {
 
   @override
   List<GuitarString> get strings => const [
-    GuitarString(note: Note.e, stringNumber: 1), // High E
-    GuitarString(note: Note.b, stringNumber: 2), // B
-    GuitarString(note: Note.g, stringNumber: 3), // G
-    GuitarString(note: Note.d, stringNumber: 4), // D
-    GuitarString(note: Note.a, stringNumber: 5), // A
-    GuitarString(note: Note.d, stringNumber: 6), // Dropped D
+    GuitarString(note: Note.e, stringNumber: 1),
+    GuitarString(note: Note.b, stringNumber: 2),
+    GuitarString(note: Note.g, stringNumber: 3),
+    GuitarString(note: Note.d, stringNumber: 4),
+    GuitarString(note: Note.a, stringNumber: 5),
+    GuitarString(note: Note.d, stringNumber: 6),
   ];
 }
 
@@ -51,12 +51,12 @@ class OpenDTuning extends Tuning {
 
   @override
   List<GuitarString> get strings => const [
-    GuitarString(note: Note.d, stringNumber: 1), // High E
-    GuitarString(note: Note.a, stringNumber: 2), // B
-    GuitarString(note: Note.fs, stringNumber: 3), // G
-    GuitarString(note: Note.d, stringNumber: 4), // D
-    GuitarString(note: Note.a, stringNumber: 5), // A
-    GuitarString(note: Note.d, stringNumber: 6), // Dropped D
+    GuitarString(note: Note.d, stringNumber: 1),
+    GuitarString(note: Note.a, stringNumber: 2),
+    GuitarString(note: Note.fs, stringNumber: 3),
+    GuitarString(note: Note.d, stringNumber: 4),
+    GuitarString(note: Note.a, stringNumber: 5),
+    GuitarString(note: Note.d, stringNumber: 6),
   ];
 }
 
@@ -66,12 +66,12 @@ class OpenGTuning extends Tuning {
 
   @override
   List<GuitarString> get strings => const [
-    GuitarString(note: Note.d, stringNumber: 1), // High E
-    GuitarString(note: Note.b, stringNumber: 2), // B
-    GuitarString(note: Note.g, stringNumber: 3), // G
-    GuitarString(note: Note.d, stringNumber: 4), // D
-    GuitarString(note: Note.g, stringNumber: 5), // A
-    GuitarString(note: Note.d, stringNumber: 6), // Dropped D
+    GuitarString(note: Note.d, stringNumber: 1),
+    GuitarString(note: Note.b, stringNumber: 2),
+    GuitarString(note: Note.g, stringNumber: 3),
+    GuitarString(note: Note.d, stringNumber: 4),
+    GuitarString(note: Note.g, stringNumber: 5),
+    GuitarString(note: Note.d, stringNumber: 6),
   ];
 }
 
@@ -81,11 +81,30 @@ class DropCTuning extends Tuning {
 
   @override
   List<GuitarString> get strings => const [
-    GuitarString(note: Note.d, stringNumber: 1), // High E
-    GuitarString(note: Note.a, stringNumber: 2), // B
-    GuitarString(note: Note.f, stringNumber: 3), // G
-    GuitarString(note: Note.c, stringNumber: 4), // D
-    GuitarString(note: Note.g, stringNumber: 5), // A
-    GuitarString(note: Note.c, stringNumber: 6), // Dropped D
+    GuitarString(note: Note.d, stringNumber: 1),
+    GuitarString(note: Note.a, stringNumber: 2),
+    GuitarString(note: Note.f, stringNumber: 3),
+    GuitarString(note: Note.c, stringNumber: 4),
+    GuitarString(note: Note.g, stringNumber: 5),
+    GuitarString(note: Note.c, stringNumber: 6),
+  ];
+}
+
+class CustomTuning extends Tuning {
+  CustomTuning(this.notes);
+  final List<Note> notes;
+
+  @override
+  String get name =>
+      'Custom (${notes[0]}${notes[1]}${notes[2]}${notes[3]}${notes[4]}${notes[5]})';
+
+  @override
+  List<GuitarString> get strings => [
+    GuitarString(note: notes[5], stringNumber: 1),
+    GuitarString(note: notes[4], stringNumber: 2),
+    GuitarString(note: notes[3], stringNumber: 3),
+    GuitarString(note: notes[2], stringNumber: 4),
+    GuitarString(note: notes[1], stringNumber: 5),
+    GuitarString(note: notes[0], stringNumber: 6),
   ];
 }

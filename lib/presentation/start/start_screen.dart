@@ -3,6 +3,7 @@ import 'package:signals/signals_flutter.dart';
 import 'package:string_stack/di/di_setup.dart';
 import 'package:string_stack/modifiers/padding.dart';
 import 'package:string_stack/presentation/start/start_view_model.dart';
+import 'package:string_stack/presentation/start/widgets/custom_tuning_wheel.dart';
 import 'package:string_stack/presentation/start/widgets/tunings_wheel.dart';
 import 'package:string_stack/presentation/chord_creator/chord_creator_screen.dart';
 
@@ -31,25 +32,50 @@ class StartScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Tuning", style: Theme.of(context).textTheme.titleLarge),
-                Text(
-                  "Custom",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    decoration: TextDecoration.underline,
+                GestureDetector(
+                  onTap: () => vm.onCustomTuningOptionTapped(),
+                  child: AnimatedSwitcher(
+                    duration: Duration(milliseconds: 350),
+                    child: vm.isCustomTuning.watch(context)
+                        ? Text(
+                            "Predefined",
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  decoration: TextDecoration.underline,
+                                ),
+                          )
+                        : Text(
+                            "Custom",
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  decoration: TextDecoration.underline,
+                                ),
+                          ),
                   ),
                 ),
               ],
             ),
 
-            TuningsWheel(
-              onTuningChanged: (index) => vm.onTuningChanged(index),
-              tunings: vm.tunings.value,
-            ).padding(vertical: 24),
+            AnimatedSwitcher(
+              duration: Duration(milliseconds: 350),
+              child: vm.isCustomTuning.watch(context)
+                  ? CustomTuningWheel(
+                      onTuningChanged: (noteIndex, tuningIndex) =>
+                          vm.onCustomTuningChanged(noteIndex, tuningIndex),
+                      customTuning: vm.customTuning.value,
+                    )
+                  : TuningsWheel(
+                      onTuningChanged: (index) => vm.onTuningChanged(index),
+                      tunings: vm.tunings.value,
+                    ),
+            ).padding(bottom: 24),
 
             Spacer(),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
+                  vm.saveTuning();
                   Navigator.push(
                     context,
                     MaterialPageRoute(

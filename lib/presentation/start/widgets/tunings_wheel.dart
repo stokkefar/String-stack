@@ -21,7 +21,11 @@ class TuningsWheel extends StatelessWidget {
           childCount: tunings.length,
           builder: (context, index) => SizedBox(
             width: double.infinity,
-            child: Text(tunings[index].name, textAlign: TextAlign.center),
+            child: Text(
+              tunings[index].name,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
         ),
         perspective: 0.01,
