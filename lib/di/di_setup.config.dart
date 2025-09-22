@@ -15,6 +15,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../domain/models/tuning.dart' as _i402;
 import '../presentation/chord_creator/chord_creator_view_model.dart' as _i953;
 import '../presentation/start/start_view_model.dart' as _i850;
+import '../presentation/tabs_creator/tabs_creator_view_model.dart' as _i406;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -26,6 +27,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i850.StartViewModel>(() => _i850.StartViewModel());
     gh.factoryParam<_i953.ChordCreatorViewModel, _i402.Tuning, dynamic>(
       (_tuning, _) => _i953.ChordCreatorViewModel(_tuning)..init(),
+    );
+    gh.factoryParam<_i406.TabsCreatorViewModel, _i402.Tuning, dynamic>(
+      (_tuning, _) => _i406.TabsCreatorViewModel(_tuning),
     );
     return this;
   }

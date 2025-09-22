@@ -5,8 +5,8 @@ import 'package:string_stack/di/di_setup.dart';
 import 'package:string_stack/domain/models/fret_position.dart';
 import 'package:string_stack/domain/models/tuning.dart';
 import 'package:string_stack/modifiers/padding.dart';
-import 'package:string_stack/presentation/chord_creator/widgets/fret_index.dart';
-import 'package:string_stack/presentation/chord_creator/widgets/tab_grid.dart';
+import 'package:string_stack/presentation/tabs_creator/widgets/fret_index.dart';
+import 'package:string_stack/presentation/tabs_creator/widgets/tab_grid.dart';
 import 'package:string_stack/presentation/chord_creator/chord_creator_view_model.dart';
 
 class ChordCreatorScreen extends StatelessWidget {
@@ -58,7 +58,7 @@ class ChordCreatorScreen extends StatelessWidget {
             Spacer(),
             TabGrid(
               tuning: tuning,
-              onMoveToFret: (stringTab) {
+              onPlaceTab: (stringTab) {
                 vm.onPlaceTab(stringTab);
                 HapticFeedback.lightImpact();
               },
@@ -67,8 +67,6 @@ class ChordCreatorScreen extends StatelessWidget {
                 HapticFeedback.mediumImpact();
               },
               tabs: vm.tabs.watch(context),
-              onClear: () => vm.clearTabs(),
-              onSave: () {},
             ),
             Spacer(),
           ],

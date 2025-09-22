@@ -5,7 +5,7 @@ import 'package:string_stack/modifiers/padding.dart';
 import 'package:string_stack/presentation/start/start_view_model.dart';
 import 'package:string_stack/presentation/start/widgets/custom_tuning_wheel.dart';
 import 'package:string_stack/presentation/start/widgets/tunings_wheel.dart';
-import 'package:string_stack/presentation/chord_creator/chord_creator_screen.dart';
+import 'package:string_stack/presentation/tabs_creator/tabs_creator_screen.dart';
 
 class StartScreen extends StatelessWidget {
   StartScreen({super.key});
@@ -19,7 +19,7 @@ class StartScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Create song tabs",
+              "What tuning are you working with?",
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             const SizedBox(height: 24),
@@ -79,7 +79,7 @@ class StartScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ChordCreatorScreen(
+                      builder: (context) => TabsCreatorScreen(
                         tuning: vm.selectedTuning.watch(context),
                       ),
                     ),

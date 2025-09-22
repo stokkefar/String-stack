@@ -15,6 +15,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          disabledElevation: 0,
+          shape: CircleBorder(),
+          backgroundColor: Color(0xFF03071e),
+          foregroundColor: Colors.white,
+        ),
         textTheme: GoogleFonts.nunitoTextTheme().copyWith(
           headlineLarge: GoogleFonts.nunito().copyWith(
             fontWeight: FontWeight.w900,
