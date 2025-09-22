@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:signals/signals_flutter.dart';
 import 'package:string_stack/domain/models/guitar_string.dart';
 import 'package:string_stack/domain/models/tuning.dart';
+import 'package:string_stack/presentation/tabs_creator/tabs_creator_view_model.dart';
 import 'package:string_stack/presentation/tabs_creator/widgets/string_item.dart';
-import 'package:collection/collection.dart';
 
 class TabGrid extends StatelessWidget {
   const TabGrid({
@@ -10,12 +11,15 @@ class TabGrid extends StatelessWidget {
     required this.tuning,
     required this.onPlaceTab,
     required this.onRemoveTab,
-    required this.tabs,
+    required this.viewModel,
+    required this.sectionIndex, // Add specific section index
   });
-  final Function(GuitarString) onPlaceTab;
-  final Function(GuitarString) onRemoveTab;
+
+  final Function(GuitarString, TabNote) onPlaceTab;
+  final Function(GuitarString, TabNote) onRemoveTab;
+  final TabsCreatorViewModel viewModel;
   final Tuning tuning;
-  final List<GuitarString> tabs;
+  final int sectionIndex; // Specific section this grid represents
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +29,19 @@ class TabGrid extends StatelessWidget {
       children: [
         ...List.generate(6, (index) {
           final string = tuning.getStringInfo(index);
-          final stringTabs = tabs
-              .firstWhereOrNull(
-                (tab) =>
-                    tab.note == string.note &&
-                    tab.stringNumber == string.stringNumber,
-              )
-              ?.tabs;
 
           return StringItem(
+            key: ValueKey(
+              '${sectionIndex}_${string.note}_${string.stringNumber}',
+            ), // Use sectionIndex, not currentSection
             string: string,
-            onPlaceTab: (stringTab) => onPlaceTab(stringTab),
-            onRemoveTab: (stringTab) => onRemoveTab(stringTab),
-            tabs: stringTabs ?? [],
+            onPlaceTab: onPlaceTab,
+            onRemoveTab: onRemoveTab,
+            tabs: viewModel.getTabsForString(
+              string,
+              sectionIndex,
+            ), // Pass specific section
+            shouldRebuild: viewModel.tabs.watch(context), // Watch the signal
           );
         }),
       ],

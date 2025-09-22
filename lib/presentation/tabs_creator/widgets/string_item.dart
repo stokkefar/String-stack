@@ -12,11 +12,13 @@ class StringItem extends StatelessWidget {
     required this.onPlaceTab,
     required this.onRemoveTab,
     required this.tabs,
+    required this.shouldRebuild, // Add this to force rebuilds
   });
   final GuitarString string;
-  final Function(GuitarString) onPlaceTab;
-  final Function(GuitarString) onRemoveTab;
+  final Function(GuitarString, TabNote) onPlaceTab;
+  final Function(GuitarString, TabNote) onRemoveTab;
   final List<TabNote> tabs;
+  final dynamic shouldRebuild; // This will be watched by the parent
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +39,9 @@ class StringItem extends StatelessWidget {
                   dropX = dropX.clamp(0, double.infinity);
 
                   final fret = details.data;
+                  final newTabNote = TabNote(fret, dropX);
 
-                  tabs.add(TabNote(fret, dropX));
-                  final stringTab = GuitarString(
-                    note: string.note,
-                    stringNumber: string.stringNumber,
-                    tabs: tabs,
-                  );
-                  onPlaceTab(stringTab);
+                  onPlaceTab(string, newTabNote);
                   HapticFeedback.lightImpact();
                 }
               },
@@ -84,16 +81,7 @@ class StringItem extends StatelessWidget {
                             removeWhenDragging: true,
                             onTap: () {
                               HapticFeedback.mediumImpact();
-
-                              tabs.remove(tabNote);
-
-                              final stringTab = GuitarString(
-                                note: string.note,
-                                stringNumber: string.stringNumber,
-                                tabs: tabs,
-                              );
-
-                              onRemoveTab(stringTab);
+                              onRemoveTab(string, tabNote);
                             },
                           ),
                         );

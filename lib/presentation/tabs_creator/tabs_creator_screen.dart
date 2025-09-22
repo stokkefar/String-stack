@@ -18,7 +18,6 @@ class TabsCreatorScreen extends StatefulWidget {
 
 class _TabsCreatorScreenState extends State<TabsCreatorScreen> {
   late final TabsCreatorViewModel _vm = getIt.get(param1: widget.tuning);
-
   late final PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -62,11 +61,16 @@ class _TabsCreatorScreenState extends State<TabsCreatorScreen> {
                 itemCount: _vm.tabSections.watch(context),
                 controller: _pageController,
                 itemBuilder: (context, index) {
+                  // Each page shows tabs for its specific index, not current section
                   return TabGrid(
+                    key: ValueKey('tab_grid_$index'),
                     tuning: _vm.tuning(),
-                    onPlaceTab: (tab) => _vm.placeTab(tab),
-                    onRemoveTab: (tab) => _vm.removeTab(tab),
-                    tabs: _vm.currentTab,
+                    onPlaceTab: (guitarString, tabNote) =>
+                        _vm.placeTab(guitarString, tabNote),
+                    onRemoveTab: (guitarString, tabNote) =>
+                        _vm.removeTab(guitarString, tabNote),
+                    viewModel: _vm,
+                    sectionIndex: index, // Pass the specific page index
                   ).padding(right: 8);
                 },
               ),
