@@ -61,7 +61,6 @@ class _TabsCreatorScreenState extends State<TabsCreatorScreen> {
                 itemCount: _vm.tabSections.watch(context),
                 controller: _pageController,
                 itemBuilder: (context, index) {
-                  // Each page shows tabs for its specific index, not current section
                   return TabGrid(
                     key: ValueKey('tab_grid_$index'),
                     tuning: _vm.tuning(),
@@ -70,7 +69,7 @@ class _TabsCreatorScreenState extends State<TabsCreatorScreen> {
                     onRemoveTab: (guitarString, tabNote) =>
                         _vm.removeTab(guitarString, tabNote),
                     viewModel: _vm,
-                    sectionIndex: index, // Pass the specific page index
+                    sectionIndex: index,
                   ).padding(right: 8);
                 },
               ),
@@ -108,9 +107,18 @@ class _TabsCreatorScreenState extends State<TabsCreatorScreen> {
             ),
 
             const SizedBox(height: 24),
-            ElevatedButton(onPressed: () {}, child: Text("Clear tabs")),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => _vm.clearTabsForSection(),
+                child: Text("Clear tabs"),
+              ),
+            ),
             const SizedBox(height: 16),
-            ElevatedButton(onPressed: () {}, child: Text("Save tabs")),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(onPressed: () {}, child: Text("Save tabs")),
+            ),
           ],
         ).padding(horizontal: 24),
       ),

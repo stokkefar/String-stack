@@ -12,14 +12,14 @@ class TabGrid extends StatelessWidget {
     required this.onPlaceTab,
     required this.onRemoveTab,
     required this.viewModel,
-    required this.sectionIndex, // Add specific section index
+    required this.sectionIndex,
   });
 
   final Function(GuitarString, TabNote) onPlaceTab;
   final Function(GuitarString, TabNote) onRemoveTab;
   final TabsCreatorViewModel viewModel;
   final Tuning tuning;
-  final int sectionIndex; // Specific section this grid represents
+  final int sectionIndex;
 
   @override
   Widget build(BuildContext context) {

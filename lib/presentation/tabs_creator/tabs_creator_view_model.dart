@@ -87,6 +87,15 @@ class TabsCreatorViewModel {
     }
   }
 
+  void clearTabsForSection() {
+    final newTabs = Map<int, Map<String, List<TabNote>>>.from(tabs.value);
+    final currentSectionIndex = currentSection.value;
+
+    newTabs[currentSectionIndex] = {};
+
+    tabs.set(newTabs);
+  }
+
   String _getStringKey(GuitarString guitarString) {
     return '${guitarString.note.toString()}_${guitarString.stringNumber}';
   }
