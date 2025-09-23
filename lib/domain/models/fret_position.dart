@@ -1,12 +1,16 @@
-import 'package:string_stack/domain/models/note.dart';
+import 'package:string_stack/domain/models/guitar_string.dart';
 
 class FretPosition {
-  const FretPosition({required this.position, this.note});
+  const FretPosition({required this.position, this.string});
   final int position;
-  final Note? note;
+  final GuitarString? string;
 
   bool get isMute => position == -1;
 
-  FretPosition copyWith({Note? note}) =>
-      FretPosition(position: position, note: note ?? this.note);
+  FretPosition copyWith({GuitarString? string}) =>
+      FretPosition(position: position, string: string ?? this.string);
+
+  @override
+  String toString() =>
+      'Fret: $position on ${string?.note}_${string?.stringNumber}';
 }

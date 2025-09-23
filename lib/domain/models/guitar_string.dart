@@ -48,4 +48,7 @@ class TabNote {
   final double neckPlacement;
 
   TabNote(this.fingerPosition, this.neckPlacement);
+
+  @override
+  String toString() => 'Tab finger position: $fingerPosition';
 }

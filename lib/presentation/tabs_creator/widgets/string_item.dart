@@ -39,7 +39,11 @@ class StringItem extends StatelessWidget {
                   dropX = dropX.clamp(0, double.infinity);
 
                   final fret = details.data;
-                  final newTabNote = TabNote(fret, dropX);
+                  FretPosition placedFretPosition = FretPosition(
+                    position: fret.position,
+                    string: string,
+                  );
+                  final newTabNote = TabNote(placedFretPosition, dropX);
 
                   onPlaceTab(string, newTabNote);
                   HapticFeedback.lightImpact();
