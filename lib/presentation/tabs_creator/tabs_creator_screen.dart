@@ -38,7 +38,7 @@ class _TabsCreatorScreenState extends State<TabsCreatorScreen> {
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headlineLarge,
             ),
-            const SizedBox(height: 64),
+            const SizedBox(height: 52),
             Wrap(
               alignment: WrapAlignment.start,
               spacing: 8,
@@ -51,7 +51,13 @@ class _TabsCreatorScreenState extends State<TabsCreatorScreen> {
               ],
             ),
 
-            Divider(),
+            Divider(
+              radius: BorderRadius.circular(16),
+              height: 1,
+              endIndent: 0,
+              indent: 0,
+              color: Theme.of(context).colorScheme.primary.withAlpha(50),
+            ).padding(vertical: 24),
 
             SizedBox(
               width: double.infinity,

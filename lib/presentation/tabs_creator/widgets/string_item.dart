@@ -56,7 +56,7 @@ class StringItem extends StatelessWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: SizedBox(
-                            height: 2,
+                            height: 1.5,
                             child: DecoratedBox(
                               decoration: BoxDecoration(color: Colors.black),
                             ),
@@ -64,13 +64,28 @@ class StringItem extends StatelessWidget {
                         ),
                         SizedBox(
                           height: 24,
-                          width: 2,
+                          width: 1,
                           child: DecoratedBox(
                             decoration: BoxDecoration(color: Colors.black),
                           ),
                         ).padding(left: 4),
                       ],
                     ),
+
+                    if (candidateData.isNotEmpty) ...[
+                      Positioned(
+                        top: 10,
+                        left: 16,
+                        right: 0,
+                        child: Container(
+                          height: 12,
+                          decoration: BoxDecoration(
+                            color: Colors.deepPurple.withAlpha(50),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                      ),
+                    ],
 
                     if (tabs.isNotEmpty) ...[
                       ...tabs.map((tabNote) {
@@ -86,21 +101,6 @@ class StringItem extends StatelessWidget {
                           ),
                         );
                       }),
-                    ],
-
-                    if (candidateData.isNotEmpty) ...[
-                      Positioned(
-                        top: 4,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          height: 24,
-                          decoration: BoxDecoration(
-                            color: Colors.deepPurple.withAlpha(100),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                      ),
                     ],
                   ],
                 );
