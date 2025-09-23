@@ -7,7 +7,9 @@ import 'package:string_stack/domain/models/tuning.dart';
 class StartViewModel {
   final Signal<List<Tuning>> tunings = signal([
     StandardTuning(),
+    HalfStepDownTuning(),
     DropDTuning(),
+    CelticTuning(),
     OpenDTuning(),
     OpenGTuning(),
     DropCTuning(),

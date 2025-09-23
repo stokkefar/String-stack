@@ -28,47 +28,75 @@ class StartScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Tuning", style: Theme.of(context).textTheme.titleLarge),
-                GestureDetector(
-                  onTap: () => vm.onCustomTuningOptionTapped(),
-                  child: AnimatedSwitcher(
-                    duration: Duration(milliseconds: 350),
-                    child: vm.isCustomTuning.watch(context)
-                        ? Text(
-                            "Predefined",
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(
-                                  decoration: TextDecoration.underline,
-                                ),
-                          )
-                        : Text(
-                            "Custom",
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(
-                                  decoration: TextDecoration.underline,
-                                ),
-                          ),
+            SizedBox(
+              height: 450,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Positioned(
+                    top: -56,
+                    left: 0,
+                    right: 0,
+                    child: AnimatedSwitcher(
+                      duration: Duration(milliseconds: 350),
+                      child: vm.isCustomTuning.watch(context)
+                          ? CustomTuningWheel(
+                              onTuningChanged: (noteIndex, tuningIndex) =>
+                                  vm.onCustomTuningChanged(
+                                    noteIndex,
+                                    tuningIndex,
+                                  ),
+                              customTuning: vm.customTuning.value,
+                            )
+                          : TuningsWheel(
+                              onTuningChanged: (index) =>
+                                  vm.onTuningChanged(index),
+                              tunings: vm.tunings.value,
+                            ),
+                    ).padding(bottom: 24),
                   ),
-                ),
-              ],
-            ),
-
-            AnimatedSwitcher(
-              duration: Duration(milliseconds: 350),
-              child: vm.isCustomTuning.watch(context)
-                  ? CustomTuningWheel(
-                      onTuningChanged: (noteIndex, tuningIndex) =>
-                          vm.onCustomTuningChanged(noteIndex, tuningIndex),
-                      customTuning: vm.customTuning.value,
-                    )
-                  : TuningsWheel(
-                      onTuningChanged: (index) => vm.onTuningChanged(index),
-                      tunings: vm.tunings.value,
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
                     ),
-            ).padding(bottom: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Tuning",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        GestureDetector(
+                          onTap: () => vm.onCustomTuningOptionTapped(),
+                          child: AnimatedSwitcher(
+                            duration: Duration(milliseconds: 350),
+                            child: vm.isCustomTuning.watch(context)
+                                ? Text(
+                                    "Predefined",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                  )
+                                : Text(
+                                    "Custom",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
             Spacer(),
             SizedBox(

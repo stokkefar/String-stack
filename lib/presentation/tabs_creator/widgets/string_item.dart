@@ -52,7 +52,7 @@ class StringItem extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(string.note.sharp),
+                        Text(string.note.notation),
                         const SizedBox(width: 8),
                         Expanded(
                           child: SizedBox(

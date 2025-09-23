@@ -14,7 +14,7 @@ class TuningsWheel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 250,
       width: double.infinity,
       child: ListWheelScrollView.useDelegate(
         childDelegate: ListWheelChildBuilderDelegate(
@@ -28,13 +28,13 @@ class TuningsWheel extends StatelessWidget {
             ),
           ),
         ),
-        perspective: 0.01,
-        diameterRatio: 1.5,
+        perspective: 0.005,
+        diameterRatio: 2,
         physics: FixedExtentScrollPhysics(),
-        magnification: 1.01,
-        overAndUnderCenterOpacity: 0.2,
+        magnification: 1.1,
+        overAndUnderCenterOpacity: 0.35,
         itemExtent: 30,
-        squeeze: 1.3,
+        squeeze: 1.1,
         onSelectedItemChanged: (value) {
           onTuningChanged(value);
           HapticFeedback.lightImpact();

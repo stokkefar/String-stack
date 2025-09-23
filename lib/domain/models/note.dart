@@ -3,45 +3,41 @@ enum Note {
   cs,
   d,
   ds,
+  df,
   e,
+  ef,
   f,
   fs,
   g,
   gs,
+  gf,
   a,
   as,
-  b;
+  af,
+  b,
+  bf;
 
-  // Sharp notation
-  String get sharp {
+  String get notation {
     switch (this) {
       case Note.cs:
         return 'C#';
       case Note.ds:
         return 'D#';
+      case Note.df:
+        return 'Db';
+      case Note.ef:
+        return 'Eb';
       case Note.fs:
         return 'F#';
       case Note.gs:
         return 'G#';
+      case Note.gf:
+        return 'Gb';
       case Note.as:
         return 'A#';
-      default:
-        return name.toUpperCase();
-    }
-  }
-
-  // Flat notation
-  String get flat {
-    switch (this) {
-      case Note.cs:
-        return 'Db';
-      case Note.ds:
-        return 'Eb';
-      case Note.fs:
-        return 'Gb';
-      case Note.gs:
+      case Note.af:
         return 'Ab';
-      case Note.as:
+      case Note.bf:
         return 'Bb';
       default:
         return name.toUpperCase();

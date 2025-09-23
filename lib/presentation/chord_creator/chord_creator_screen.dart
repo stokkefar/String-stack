@@ -56,18 +56,18 @@ class ChordCreatorScreen extends StatelessWidget {
               ],
             ),
             Spacer(),
-            TabGrid(
-              tuning: tuning,
-              onPlaceTab: (stringTab) {
-                vm.onPlaceTab(stringTab);
-                HapticFeedback.lightImpact();
-              },
-              onOccupiedTabTapped: (stringTab) {
-                vm.removeStringTab(stringTab);
-                HapticFeedback.mediumImpact();
-              },
-              tabs: vm.tabs.watch(context),
-            ),
+            // TabGrid(
+            //   tuning: tuning,
+            //   onPlaceTab: (stringTab) {
+            //     vm.onPlaceTab(stringTab);
+            //     HapticFeedback.lightImpact();
+            //   },
+            //   onOccupiedTabTapped: (stringTab) {
+            //     vm.removeStringTab(stringTab);
+            //     HapticFeedback.mediumImpact();
+            //   },
+            //   tabs: vm.tabs.watch(context),
+            // ),
             Spacer(),
           ],
         ).padding(horizontal: 24),

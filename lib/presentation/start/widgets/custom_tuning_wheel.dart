@@ -26,7 +26,7 @@ class CustomTuningWheel extends StatelessWidget {
           return Flexible(
             flex: 1,
             child: SizedBox(
-              height: 100,
+              height: 250,
               width: 35,
               child: ListWheelScrollView.useDelegate(
                 childDelegate: ListWheelChildBuilderDelegate(
@@ -34,21 +34,22 @@ class CustomTuningWheel extends StatelessWidget {
                   builder: (context, index) => SizedBox(
                     width: double.infinity,
                     child: Text(
-                      notes[index].sharp,
+                      notes[index].notation,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 ),
-                useMagnifier: true,
-                perspective: 0.01,
-                diameterRatio: 1.5,
-                controller: FixedExtentScrollController(initialItem: noteIndex),
+                perspective: 0.005,
+                diameterRatio: 2,
                 physics: FixedExtentScrollPhysics(),
-                magnification: 1.05,
-                overAndUnderCenterOpacity: 0.2,
+                magnification: 1.1,
+                overAndUnderCenterOpacity: 0.35,
                 itemExtent: 30,
-                squeeze: 1.3,
+                squeeze: 1.1,
+                useMagnifier: true,
+                controller: FixedExtentScrollController(initialItem: noteIndex),
+
                 onSelectedItemChanged: (noteIndex) {
                   onTuningChanged(noteIndex, customTuningIndex);
                   HapticFeedback.lightImpact();

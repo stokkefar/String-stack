@@ -3,13 +3,12 @@ import 'package:string_stack/domain/models/note.dart';
 
 abstract class Tuning {
   String get name;
-  List<GuitarString> get strings; // From high to low (1st string to 6th string)
+  List<GuitarString> get strings;
 
   int get stringCount => strings.length;
 
   GuitarString getStringInfo(int stringIndex) => strings[stringIndex];
 
-  // Get string by string number (1-6)
   GuitarString getStringByNumber(int stringNumber) {
     return strings.firstWhere((s) => s.stringNumber == stringNumber);
   }
@@ -27,6 +26,21 @@ class StandardTuning extends Tuning {
     GuitarString(note: Note.d, stringNumber: 4),
     GuitarString(note: Note.a, stringNumber: 5),
     GuitarString(note: Note.e, stringNumber: 6),
+  ];
+}
+
+class HalfStepDownTuning extends Tuning {
+  @override
+  String get name => 'Half step down (EbAbDbGbBbEb)';
+
+  @override
+  List<GuitarString> get strings => const [
+    GuitarString(note: Note.ef, stringNumber: 1),
+    GuitarString(note: Note.bf, stringNumber: 2),
+    GuitarString(note: Note.gf, stringNumber: 3),
+    GuitarString(note: Note.df, stringNumber: 4),
+    GuitarString(note: Note.af, stringNumber: 5),
+    GuitarString(note: Note.ef, stringNumber: 6),
   ];
 }
 
@@ -87,6 +101,21 @@ class DropCTuning extends Tuning {
     GuitarString(note: Note.c, stringNumber: 4),
     GuitarString(note: Note.g, stringNumber: 5),
     GuitarString(note: Note.c, stringNumber: 6),
+  ];
+}
+
+class CelticTuning extends Tuning {
+  @override
+  String get name => 'Celtic (DADGAD)';
+
+  @override
+  List<GuitarString> get strings => const [
+    GuitarString(note: Note.d, stringNumber: 1),
+    GuitarString(note: Note.a, stringNumber: 2),
+    GuitarString(note: Note.g, stringNumber: 3),
+    GuitarString(note: Note.d, stringNumber: 4),
+    GuitarString(note: Note.a, stringNumber: 5),
+    GuitarString(note: Note.d, stringNumber: 6),
   ];
 }
 
