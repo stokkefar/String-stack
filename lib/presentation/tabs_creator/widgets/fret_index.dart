@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:string_stack/domain/models/fret_position.dart';
+import 'package:string_stack/domain/models/guitar_string.dart';
 
 class FretIndex extends StatelessWidget {
   const FretIndex({
     required this.fret,
     this.removeWhenDragging = false,
     this.onTap,
+    this.existingTabNote,
     super.key,
   });
   final FretPosition fret;
   final bool removeWhenDragging;
   final VoidCallback? onTap;
+  final TabNote? existingTabNote;
 
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Draggable<FretPosition>(
+      child: Draggable<DragData>(
         onDragStarted: () => HapticFeedback.lightImpact(),
         childWhenDragging: removeWhenDragging ? const SizedBox.shrink() : null,
-        data: fret,
+        data: DragData(fret, existingTabNote),
         feedback: _Fret(fret),
         child: _Fret(fret),
       ),
@@ -53,4 +57,11 @@ class _Fret extends StatelessWidget {
       ),
     );
   }
+}
+
+class DragData {
+  final FretPosition fret;
+  final TabNote? existingTab; // null for new tabs from palette
+
+  DragData(this.fret, [this.existingTab]);
 }

@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:signals/signals_flutter.dart';
+import 'package:string_stack/domain/models/fret_position.dart';
 import 'package:string_stack/domain/models/guitar_string.dart';
 import 'package:string_stack/domain/models/tuning.dart';
 
@@ -98,5 +99,23 @@ class TabsCreatorViewModel {
 
   String _getStringKey(GuitarString guitarString) {
     return '${guitarString.note.toString()}_${guitarString.stringNumber}';
+  }
+
+  void moveTab(
+    GuitarString fromString,
+    GuitarString toString,
+    TabNote tabNote,
+    double newNeckPlacement,
+  ) {
+    // Remove from old string
+    removeTab(fromString, tabNote);
+
+    // Create new tab on target string
+    FretPosition newFretPosition = FretPosition(
+      position: tabNote.fingerPosition.position,
+      string: toString,
+    );
+    final newTabNote = TabNote(newFretPosition, newNeckPlacement);
+    placeTab(toString, newTabNote);
   }
 }

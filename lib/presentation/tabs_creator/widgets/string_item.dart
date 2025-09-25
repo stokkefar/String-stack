@@ -4,7 +4,6 @@ import 'package:string_stack/domain/models/fret_position.dart';
 import 'package:string_stack/domain/models/guitar_string.dart';
 import 'package:string_stack/modifiers/padding.dart';
 import 'package:string_stack/presentation/tabs_creator/widgets/fret_index.dart';
-import 'package:collection/collection.dart';
 
 class StringItem extends StatelessWidget {
   const StringItem({
@@ -14,13 +13,13 @@ class StringItem extends StatelessWidget {
     required this.onRemoveTab,
     required this.tabs,
     required this.shouldRebuild,
-    required this.allTabs,
+    required this.onMoveTab,
   });
   final GuitarString string;
   final Function(GuitarString, TabNote) onPlaceTab;
   final Function(GuitarString, TabNote) onRemoveTab;
+  final Function(GuitarString, GuitarString, TabNote, double) onMoveTab;
   final List<TabNote> tabs;
-  final List<TabNote> allTabs;
   final dynamic shouldRebuild;
 
   @override
@@ -30,7 +29,7 @@ class StringItem extends StatelessWidget {
       child: SizedBox.expand(
         child: Builder(
           builder: (stringContext) {
-            return DragTarget<FretPosition>(
+            return DragTarget<DragData>(
               onAcceptWithDetails: (details) {
                 RenderBox? box = stringContext.findRenderObject() as RenderBox?;
                 if (box != null) {
@@ -38,31 +37,23 @@ class StringItem extends StatelessWidget {
                   double dropX = localPosition.dx - 15;
                   dropX = dropX.clamp(0, double.infinity);
 
-                  final fret = details.data;
-
-                  // Check if this fret is being dragged from an existing position
-                  // We need to check if it has the same position AND string (meaning it's the same tab being moved)
-                  final existingTab = allTabs.firstWhereOrNull(
-                    (tab) =>
-                        tab.fingerPosition.position == fret.position &&
-                        tab.fingerPosition.string?.stringNumber ==
-                            fret.string?.stringNumber,
-                  );
+                  final dragData = details.data;
+                  final fret = dragData.fret;
+                  final existingTab = dragData.existingTab;
 
                   if (existingTab != null) {
-                    // This is an existing tab being moved, remove it from old position
+                    // This is an existing tab being moved - use moveTab
                     final oldString = existingTab.fingerPosition.string!;
-                    onRemoveTab(oldString, existingTab);
+                    onMoveTab(oldString, string, existingTab, dropX);
+                  } else {
+                    // Create new tab from palette
+                    FretPosition placedFretPosition = FretPosition(
+                      position: fret.position,
+                      string: string,
+                    );
+                    final newTabNote = TabNote(placedFretPosition, dropX);
+                    onPlaceTab(string, newTabNote);
                   }
-                  // If existingTab is null, it's a new tab (even if same fret number)
-
-                  // Create new tab on current string
-                  FretPosition placedFretPosition = FretPosition(
-                    position: fret.position,
-                    string: string,
-                  );
-                  final newTabNote = TabNote(placedFretPosition, dropX);
-                  onPlaceTab(string, newTabNote);
 
                   HapticFeedback.lightImpact();
                 }
@@ -120,6 +111,7 @@ class StringItem extends StatelessWidget {
                           left: tabNote.neckPlacement.clamp(0, double.infinity),
                           child: FretIndex(
                             fret: tabNote.fingerPosition,
+                            existingTabNote: tabNote,
                             removeWhenDragging: true,
                             onTap: () {
                               HapticFeedback.mediumImpact();
