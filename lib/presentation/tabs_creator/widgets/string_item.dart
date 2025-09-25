@@ -4,6 +4,7 @@ import 'package:string_stack/domain/models/fret_position.dart';
 import 'package:string_stack/domain/models/guitar_string.dart';
 import 'package:string_stack/modifiers/padding.dart';
 import 'package:string_stack/presentation/tabs_creator/widgets/fret_index.dart';
+import 'package:collection/collection.dart';
 
 class StringItem extends StatelessWidget {
   const StringItem({
@@ -12,13 +13,15 @@ class StringItem extends StatelessWidget {
     required this.onPlaceTab,
     required this.onRemoveTab,
     required this.tabs,
-    required this.shouldRebuild, // Add this to force rebuilds
+    required this.shouldRebuild,
+    required this.allTabs,
   });
   final GuitarString string;
   final Function(GuitarString, TabNote) onPlaceTab;
   final Function(GuitarString, TabNote) onRemoveTab;
   final List<TabNote> tabs;
-  final dynamic shouldRebuild; // This will be watched by the parent
+  final List<TabNote> allTabs;
+  final dynamic shouldRebuild;
 
   @override
   Widget build(BuildContext context) {
@@ -29,23 +32,38 @@ class StringItem extends StatelessWidget {
           builder: (stringContext) {
             return DragTarget<FretPosition>(
               onAcceptWithDetails: (details) {
-                // Get drop position relative to the string
                 RenderBox? box = stringContext.findRenderObject() as RenderBox?;
                 if (box != null) {
                   Offset localPosition = box.globalToLocal(details.offset);
-                  double dropX = localPosition.dx - 15; // Center the tab
-
-                  // Ensure minimum position
+                  double dropX = localPosition.dx - 15;
                   dropX = dropX.clamp(0, double.infinity);
 
                   final fret = details.data;
+
+                  // Check if this fret is being dragged from an existing position
+                  // We need to check if it has the same position AND string (meaning it's the same tab being moved)
+                  final existingTab = allTabs.firstWhereOrNull(
+                    (tab) =>
+                        tab.fingerPosition.position == fret.position &&
+                        tab.fingerPosition.string?.stringNumber ==
+                            fret.string?.stringNumber,
+                  );
+
+                  if (existingTab != null) {
+                    // This is an existing tab being moved, remove it from old position
+                    final oldString = existingTab.fingerPosition.string!;
+                    onRemoveTab(oldString, existingTab);
+                  }
+                  // If existingTab is null, it's a new tab (even if same fret number)
+
+                  // Create new tab on current string
                   FretPosition placedFretPosition = FretPosition(
                     position: fret.position,
                     string: string,
                   );
                   final newTabNote = TabNote(placedFretPosition, dropX);
-
                   onPlaceTab(string, newTabNote);
+
                   HapticFeedback.lightImpact();
                 }
               },

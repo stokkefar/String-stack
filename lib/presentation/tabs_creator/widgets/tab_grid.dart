@@ -23,6 +23,15 @@ class TabGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get all tabs for this section across all strings
+    final allTabsForSection = <TabNote>[];
+    for (int i = 0; i < 6; i++) {
+      final string = tuning.getStringInfo(i);
+      allTabsForSection.addAll(
+        viewModel.getTabsForString(string, sectionIndex),
+      );
+    }
+
     return ListView(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -33,15 +42,13 @@ class TabGrid extends StatelessWidget {
           return StringItem(
             key: ValueKey(
               '${sectionIndex}_${string.note}_${string.stringNumber}',
-            ), // Use sectionIndex, not currentSection
+            ),
             string: string,
             onPlaceTab: onPlaceTab,
             onRemoveTab: onRemoveTab,
-            tabs: viewModel.getTabsForString(
-              string,
-              sectionIndex,
-            ), // Pass specific section
-            shouldRebuild: viewModel.tabs.watch(context), // Watch the signal
+            tabs: viewModel.getTabsForString(string, sectionIndex),
+            allTabs: allTabsForSection, // Pass all tabs
+            shouldRebuild: viewModel.tabs.watch(context),
           );
         }),
       ],
