@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:string_stack/domain/models/fret_position.dart';
 
-class FretIndex extends StatefulWidget {
+class FretIndex extends StatelessWidget {
   const FretIndex({
     required this.fret,
     this.removeWhenDragging = false,
@@ -13,31 +13,15 @@ class FretIndex extends StatefulWidget {
   final bool removeWhenDragging;
   final VoidCallback? onTap;
 
-  @override
-  State<FretIndex> createState() => _FretIndexState();
-}
-
-class _FretIndexState extends State<FretIndex> {
-  late FretPosition _fret;
-
-  @override
-  void initState() {
-    _fret = widget.fret;
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: onTap,
       child: Draggable<FretPosition>(
         onDragStarted: () => HapticFeedback.lightImpact(),
-        childWhenDragging: widget.removeWhenDragging
-            ? const SizedBox.shrink()
-            : null,
-        data: _fret,
-        feedback: _Fret(_fret),
-        child: _Fret(_fret),
+        childWhenDragging: removeWhenDragging ? const SizedBox.shrink() : null,
+        data: fret,
+        feedback: _Fret(fret),
+        child: _Fret(fret),
       ),
     );
   }

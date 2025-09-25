@@ -84,7 +84,12 @@ class StringItem extends StatelessWidget {
                         child: Container(
                           height: 12,
                           decoration: BoxDecoration(
-                            color: Colors.deepPurple.withAlpha(50),
+                            color: const Color.fromARGB(
+                              255,
+                              51,
+                              25,
+                              95,
+                            ).withAlpha(50),
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
